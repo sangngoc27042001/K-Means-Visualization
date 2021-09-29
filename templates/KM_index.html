@@ -80,7 +80,7 @@
     <div class="canvasdiv" id="content">
         <canvas id="myCanvas"></canvas>
     </div><br/>
-    <form class="d-flex justify-content-center" action="/KM_step" method="POST">
+    <form class="d-flex justify-content-center" action="/KM_draw" method="POST">
         <div  class="form-group">
             <input type="hidden" id="datapoint" name="datapoint" value=""/>
             <input type="hidden" value="{{client_num}}" name="client_num">
@@ -110,15 +110,15 @@
     },false);
 
     canvas.addEventListener('mousedown',function(e){
-        console.log(mouse);
         drawdata([mouse.x, mouse.y],"black");
+        fn1();
+        console.log(datapoint.value);
     },false);
 
     function drawdata(point, color){
         cntx.strokeStyle = color;
         cntx.strokeRect(point[0], point[1], 5, 5);
         data.push(point);
-        console.log(data);
         cntx.strokeStyle = "black";
     }
 
@@ -131,7 +131,6 @@
 
     function fn1(){
         datapoint.value="["+data.toString()+"]";
-        console.log(datapoint.value);
     }
     function toArray(x){
         return JSON.parse(x);
