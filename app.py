@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request,redirect
+
 app = Flask(__name__,template_folder="templates")
 client_num=-1
 from KM import *
@@ -34,11 +35,11 @@ def KM_draw():
     except:
         pass
     ret=kmeans_array[cn].points_with_centroids()
-    print("\nclient"+str(cn)+"\n"+str(ret)+"\n")
+    print("\nclient"+str(cn)+"\n"+str(ret))
     return render_template(
         'KM_step.html',hh="heading", 
-        inn=ret[0], 
-        centroid=ret[1],
+        inn=kmeans_array[cn].points_with_centroids_[0], 
+        centroid=kmeans_array[cn].points_with_centroids_[1],
         client_num=cn
         )
 
