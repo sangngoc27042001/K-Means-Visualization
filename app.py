@@ -1,8 +1,4 @@
-from flask import Flask, render_template, request
-
-from werkzeug.utils import redirect
-Score_alphabet =0
-BScore_alphabet =0
+from flask import Flask, render_template, request,redirect
 app = Flask(__name__,template_folder="templates")
 client_num=-1
 from KM import *
