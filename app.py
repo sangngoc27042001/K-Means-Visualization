@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request
-from KM import *
+
 from werkzeug.utils import redirect
 Score_alphabet =0
 BScore_alphabet =0
 app = Flask(__name__,template_folder="templates")
 client_num=-1
-
+from KM import *
 @app.route('/')
 def home():
     global client_num
@@ -17,19 +17,17 @@ def home():
 
 @app.route('/KM_draw', methods=['GET', 'POST'])
 def KM_draw():
+    global kmeans_array
     cn=int(request.form['client_num'])
     try:
         data= to2Darray(request.form['datapoint'])
         if(len(data)==0):
             return redirect("/")
         K=request.form['K']
-        print((K,cn))
         kmeans_array[cn].set_init(int(K), data)
     except:
         pass
     
-    ret=kmeans_array[cn].points_with_centroids()
-    print(ret)
     try:
         if(request.form['clear']=="yes"):
             return redirect("/")
@@ -40,6 +38,7 @@ def KM_draw():
     except:
         pass
     ret=kmeans_array[cn].points_with_centroids()
+    print("\nclient"+str(cn)+"\n"+str(ret)+"\n")
     return render_template(
         'KM_step.html',hh="heading", 
         inn=ret[0], 
