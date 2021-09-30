@@ -10,9 +10,10 @@ def home():
         client_num=0
     else:
         client_num+=1
+    print("client"+str(client_num))
     return render_template('KM_index.html',hh="heading",client_num=client_num)
 
-@app.route('/KM_draw', methods=['GET', 'POST'])
+@app.route('/KM_draw', methods=['POST'])
 def KM_draw():
     global kmeans_array
     cn=int(request.form['client_num'])
@@ -28,14 +29,14 @@ def KM_draw():
     try:
         if(request.form['clear']=="yes"):
             return redirect("/")
-        if(request.form['random']=="yes"):
+        elif(request.form['random']=="yes"):
             kmeans_array[cn].random()
         else:
             kmeans_array[cn].step()
     except:
         pass
     ret=kmeans_array[cn].points_with_centroids()
-    print("\nclient"+str(cn)+"\n"+str(ret))
+    print("\nclient "+str(cn)+"\n"+str(ret))
     return render_template(
         'KM_step.html',hh="heading", 
         inn=kmeans_array[cn].points_with_centroids_[0], 
